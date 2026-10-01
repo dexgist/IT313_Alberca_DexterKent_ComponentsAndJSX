@@ -1,9 +1,12 @@
+import { useState } from "react";
+
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  Pressable,
 } from "react-native";
 
 const students = [
@@ -52,9 +55,7 @@ function StudentCard({
     <View style={styles.card}>
       <View style={styles.cardTop}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {name.charAt(0)}
-          </Text>
+          <Text style={styles.avatarText}>{name.charAt(0)}</Text>
         </View>
 
         <View style={styles.studentInfo}>
@@ -87,6 +88,12 @@ function StudentCard({
 }
 
 export default function StudentRoster() {
+  const [roster, setRoster] = useState(students);
+
+  const reverseRoster = () => {
+    setRoster([...roster].reverse());
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -108,8 +115,9 @@ export default function StudentRoster() {
         <View style={styles.summaryCard}>
           <View>
             <Text style={styles.summaryLabel}>TOTAL STUDENTS</Text>
+
             <Text style={styles.summaryNumber}>
-              {students.length}
+              {roster.length}
             </Text>
           </View>
 
@@ -118,17 +126,29 @@ export default function StudentRoster() {
           </View>
         </View>
 
-        {/* Section Title */}
+        {/* Reverse Button */}
+        <Pressable
+          style={styles.reverseButton}
+          onPress={reverseRoster}
+        >
+          <Text style={styles.reverseButtonText}>
+            ↕ Reverse Roster
+          </Text>
+        </Pressable>
+
+        {/* Section Header */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Enrolled Students</Text>
+          <Text style={styles.sectionTitle}>
+            Enrolled Students
+          </Text>
 
           <Text style={styles.sectionCount}>
-            {`${students.length} students`}
+            {`${roster.length} students`}
           </Text>
         </View>
 
         {/* Student Cards */}
-        {students.map((student) => (
+        {roster.map((student) => (
           <StudentCard
             key={student.id}
             name={student.name}
@@ -186,7 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4F6EF7",
     borderRadius: 20,
     padding: 20,
-    marginBottom: 28,
+    marginBottom: 15,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -226,6 +246,29 @@ const styles = StyleSheet.create({
 
   iconText: {
     fontSize: 27,
+  },
+
+  reverseButton: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginBottom: 25,
+
+    shadowColor: "#1A2740",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+
+  reverseButtonText: {
+    color: "#4F6EF7",
+    fontSize: 14,
+    fontWeight: "800",
   },
 
   sectionHeader: {

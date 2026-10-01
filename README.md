@@ -1,56 +1,63 @@
-# Welcome to your Expo app 👋
+# IT313 - Components and JSX
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Student Roster Card Renderer
 
-## Get started
+This project demonstrates React Native functional components, props, JSX expressions, conditional rendering, list rendering, and the use of stable keys.
 
-1. Install dependencies
+## Problem
 
-   ```bash
-   npm install
-   ```
+The task is to create a React Native student roster that displays enrolled students as reusable cards. Each card displays the student's name, course, and number of units. Students with a full load also display a "Full Load" label.
 
-2. Start the app
+The total number of students is calculated from the students array instead of being hard-coded.
 
-   ```bash
-   npx expo start
-   ```
+## Component Structure
 
-In the output, you'll find options to open the app in a
+### StudentCard
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+`StudentCard` is a reusable functional component. It receives the following props:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* name
+* course
+* units
+* isFullLoad
 
-## Get a fresh project
+The props are destructured directly in the function parameter.
 
-When you're ready, run:
+The component uses JSX expressions to display the student information and uses conditional rendering to display "Full Load" only when `isFullLoad` is true.
+
+### StudentRoster
+
+`StudentRoster` is the parent component. It contains the students array and uses `.map()` to render one `StudentCard` for every student.
+
+Each card uses the student's unique ID as its React key:
+
+`key={student.id}`
+
+The student count is computed using:
+
+`${students.length}`
+
+## Technologies Used
+
+* React Native
+* Expo
+* JavaScript/TypeScript
+* JSX
+
+## How to Run
+
+1. Install Node.js.
+2. Open the project folder in VS Code.
+3. Install the project dependencies.
+4. Start the Expo development server.
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+5. Open the application using Expo Go or an Android emulator.
 
-### Other setup steps
+## Key Experiment
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The project also demonstrates the difference between using an array index and a stable student ID as the React key. The index-based key was tested while reversing the roster order. The final implementation uses `student.id` because it provides a stable identity for each student.
